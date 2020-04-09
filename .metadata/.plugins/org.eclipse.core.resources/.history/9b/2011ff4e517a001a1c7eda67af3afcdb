@@ -1,0 +1,5 @@
+package com.husain.ppmapi.domain;
+@Entity
+public class Project {
+
+}
