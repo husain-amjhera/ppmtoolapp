@@ -2,23 +2,38 @@ package com.husain.ppmapi.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Project {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@NotBlank(message="projectName is Required")
 	private String projectName;
+	@Size(min=4,max=4,message="projectIdentifier should be between 4 to 5 characters")
+	@Column(updatable = false , unique = true)
+	@NotBlank(message="projectIdentifier is Required")
 	private String projectIdentifier;
+	@NotBlank(message="description is Required")
 	private String description;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date start_date;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date end_date;
-	
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date created_At;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date updated_At;
 	public long getId() {
 		return id;
@@ -72,11 +87,11 @@ public class Project {
 	public Project() {
 		super();
 	}
-	
+	@PrePersist
 	protected void onCreate() {
 		this.created_At = new Date();
 	}
-	
+	@PreUpdate
 	protected void onUpdate() {
 		this.updated_At = new Date();
 	}

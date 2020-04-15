@@ -1,0 +1,26 @@
+package com.husain.ppmapi.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.husain.ppmapi.domain.Project;
+import com.husain.ppmapi.service.ProjectService;
+
+@RestController
+@RequestMapping("/api/project")
+public class ProjectController {
+	
+	@Autowired
+	private ProjectService projectService;
+	
+	public ResponseEntity<Project> createNewProject(@RequestBody Project project){
+		Project proj =projectService.saveOrUpdate(project);
+		return new ResponseEntity<Project>(proj, HttpStatus.CREATED);
+	}
+	
+
+}
